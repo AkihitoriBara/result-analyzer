@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Next.js
+client/.next/
+
+# Build Output
+server/dist/
+
+# Environment Variables
+server/.env
+
+# Uploaded PDFs
+server/src/uploads/*
+
+# Keep Upload Folder
+!server/src/uploads/.gitkeep
+
+# Logs
+*.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
