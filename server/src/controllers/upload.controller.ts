@@ -4,7 +4,7 @@ import { UploadService } from "../services/upload.service.js";
 const uploadService = new UploadService();
 
 export class UploadController {
-  upload(req: Request, res: Response) {
+  async upload(req: Request, res: Response) {
     const file = req.file;
 
     if (!file) {
@@ -14,7 +14,7 @@ export class UploadController {
       });
     }
 
-    const result = uploadService.uploadFile(file);
+    const result = await uploadService.uploadFile(file);
 
     return res.status(200).json(result);
   }
