@@ -52,8 +52,6 @@ export class ResultPdfParser {
 
         // Return the array itself
         resolve(parsedStudents);
-
-        resolve(parsedStudents);
       });
 
       // Start reading the PDF

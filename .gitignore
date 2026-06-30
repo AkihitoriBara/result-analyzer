@@ -1,25 +1,27 @@
 # Dependencies
 node_modules/
 
+# Build output
+server/dist/
+
 # Next.js
 client/.next/
 
-# Build Output
-server/dist/
-
-# Environment Variables
+# Environment variables
 server/.env
 
 # Uploaded PDFs
 server/src/uploads/*
-
-# Keep Upload Folder
 !server/src/uploads/.gitkeep
+
+# Prisma generated files (only if you ever use custom output)
+server/src/generated/
 
 # Logs
 *.log
+npm-debug.log*
 
-# OS Files
+# OS files
 .DS_Store
 Thumbs.db
 

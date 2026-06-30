@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model PassCriteria {
+  id Int @id @default(autoincrement())
+
+  minimumInternal Int
+  minimumExternal Int
+  minimumTotal Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  uploads Upload[]
+}
+
+model Upload {
+  id Int @id @default(autoincrement())
+
+  fileName String
+  originalFileName String
+
+  semester Int
+  academicYear String
+
+  uploadedAt DateTime @default(now())
+
+  archived Boolean @default(false)
+
+  criteriaId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  criteria PassCriteria @relation(fields: [criteriaId], references: [id])
+
+  results Result[]
+}
+
+model Student {
+  id Int @id @default(autoincrement())
+
+  enrollment String @unique
+  rollNumber String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  results Result[]
+}
+
+model Result {
+  id Int @id @default(autoincrement())
+
+  studentId Int
+  uploadId Int
+
+  sgpa Float
+
+  totalCredits Int
+  totalGradePoints Int
+
+  passed Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  student Student @relation(fields: [studentId], references: [id])
+  upload Upload @relation(fields: [uploadId], references: [id])
+
+  subjects SubjectResult[]
+}
+
+model SubjectResult {
+  id Int @id @default(autoincrement())
+
+  resultId Int
+
+  subjectCode String
+  subjectName String
+
+  internal Int
+  external Int
+  total Int
+
+  grade String
+
+  credits Int
+  gradePoints Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  result Result @relation(fields: [resultId], references: [id])
+}
