@@ -1,112 +1,168 @@
 # 📄 Result Analyzer
 
-A full-stack web application built with **Next.js**, **Express**, and **TypeScript** that transforms complex university result PDFs into clean, searchable, and downloadable student reports.
+A full-stack web application that converts university semester result PDFs into a searchable academic database.
+
+The system automatically extracts students, subjects, grades, SGPA, credits and pass/fail information from official university result sheets and stores them in PostgreSQL for further analysis.
 
 ---
 
-## ✨ Current Features
+# ✨ Features
 
-- ✅ Upload university result PDFs
-- ✅ REST API built with Express
-- ✅ TypeScript backend architecture
-- ✅ PDF upload using Multer
-- 🔄 PDF parsing (In Progress)
-- ⏳ Student search by Enrollment Number
-- ⏳ Automatic Pass/Fail Analysis
-- ⏳ Downloadable Student Report Generation
+## Completed
+
+- ✅ PDF Upload API
+- ✅ Automatic PDF Parsing
+- ✅ Student Extraction
+- ✅ Subject Extraction
+- ✅ SGPA Calculation
+- ✅ Total Credits Calculation
+- ✅ Grade Point Calculation
+- ✅ Automatic Pass / Fail Detection
+- ✅ Duplicate Student Prevention (Upsert)
+- ✅ PostgreSQL Database Integration
+- ✅ Relational Database Design
+- ✅ Upload History
+- ✅ Pass Criteria Storage
+
+## Coming Soon
+
+- Student Search
+- Statistics Dashboard
+- Result Filtering
+- Topper Analysis
+- Downloadable Report Cards
+- Authentication
+- Frontend Dashboard
 
 ---
 
-## 🛠 Tech Stack
+# 🛠 Tech Stack
 
-### Frontend
+## Frontend
 
 - Next.js
+- React
 - TypeScript
-- Tailwind CSS
+- TailwindCSS
 - shadcn/ui
 
-### Backend
+## Backend
 
 - Express
 - TypeScript
+- Prisma ORM
+- PostgreSQL (Neon)
 - Multer
-- pdf-parse _(Coming Soon)_
+- pdf2json
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
-```text
+```
 result-analyzer/
 
-├── client/         # Next.js Frontend
+client/
+    Next.js frontend
 
-├── server/         # Express Backend
+server/
+    Express backend
+    Prisma
+    PDF Parser
+    Database
+    API
 
-└── README.md
+README.md
 ```
 
 ---
 
-## 🚀 Roadmap
+# Database
 
-### Version 1 (Current)
+Current database tables
 
-- [x] Project Setup
-- [x] Express Backend
-- [x] TypeScript Configuration
-- [x] Upload API
+- Student
+- Result
+- SubjectResult
+- Upload
+- PassCriteria
+
+Relationships
+
+Student
+└── Results
+└── Subject Results
+
+Upload
+└── Results
+
+PassCriteria
+└── Upload
+
+---
+
+# Current Progress
+
+Backend Setup ██████████ 100%
+
+Database Design ██████████ 100%
+
+PDF Upload ██████████ 100%
+
+PDF Parsing ██████████ 100%
+
+Result Import ██████████ 100%
+
+Statistics API █░░░░░░░░░ 10%
+
+Frontend ░░░░░░░░░░ 0%
+
+---
+
+# Roadmap
+
+## Version 1
+
+- [x] Backend Setup
+- [x] Database Design
 - [x] PDF Upload
+- [x] PDF Parsing
+- [x] Student Parser
+- [x] Subject Parser
+- [x] Result Import
+- [x] Pass / Fail Analysis
 
-### Version 2
+## Version 2
 
-- [ ] Read PDF Contents
-- [ ] Parse Student Information
-- [ ] Search by Enrollment Number
-- [ ] Analyze Results
+- [ ] Search API
+- [ ] Statistics API
+- [ ] Dashboard
+- [ ] Upload History
+- [ ] Filtering
 
-### Version 3
+## Version 3
 
-- [ ] Generate Student Result PDF
-- [ ] Dashboard UI
-- [ ] Statistics
+- [ ] Authentication
+- [ ] Admin Panel
+- [ ] Report Card Generation
 - [ ] Deployment
 
 ---
 
-## 🎯 Project Goal
+# Goal
 
-Many universities provide semester results as large PDF documents that are difficult for students to navigate.
-
-The goal of this project is to allow a student to:
-
-1. Upload the official university result PDF.
-2. Enter their Enrollment Number.
-3. Automatically extract their result.
-4. Determine whether they have passed or failed based on predefined academic rules.
-5. Generate a clean and easy-to-read downloadable report.
+Transform large university result PDFs into structured relational data that can be searched, analyzed and visualized through a modern web interface.
 
 ---
 
-## 📈 Current Progress
+# Author
 
-```text
-Backend Setup          ██████████ 100%
+Built as a personal learning project to explore:
 
-File Upload            ██████████ 100%
-
-PDF Parsing            ░░░░░░░░░░   0%
-
-Student Search         ░░░░░░░░░░   0%
-
-Result Analysis        ░░░░░░░░░░   0%
-
-Frontend               ░░░░░░░░░░   0%
-```
-
----
-
-## 👨‍💻 Author
-
-Developed as a learning project while exploring full-stack web development with TypeScript, Express, and Next.js.
+- TypeScript
+- Express
+- Prisma ORM
+- PostgreSQL
+- PDF Parsing
+- Backend Architecture
+- REST API Design

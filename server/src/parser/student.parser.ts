@@ -47,6 +47,19 @@ export class StudentParser {
     const enrollment = words[0];
     const rollNumber = words[1];
 
+    if (words.includes("With-held")) {
+      return {
+        enrollment,
+        rollNumber,
+
+        subjects: [],
+
+        totalCredits: 0,
+        totalGradePoints: 0,
+        sgpa: 0,
+      };
+    }
+
     const subjects = this.subjectParser.parse(words);
 
     let totalCredits = 0;

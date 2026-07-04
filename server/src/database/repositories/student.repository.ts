@@ -1,30 +1,20 @@
 import prisma from "../prisma.js";
 
 export class StudentRepository {
-  async findByEnrollment(enrollment: string) {
-    return prisma.student.findUnique({
+  async upsertStudent(enrollment: string, rollNumber: string) {
+    return prisma.student.upsert({
       where: {
         enrollment,
       },
-    });
-  }
 
-  async createStudent(enrollment: string, rollNumber: string) {
-    return prisma.student.create({
-      data: {
+      update: {
+        rollNumber,
+      },
+
+      create: {
         enrollment,
         rollNumber,
       },
     });
-  }
-
-  async findOrCreateStudent(enrollment: string, rollNumber: string) {
-    const existing = await this.findByEnrollment(enrollment);
-
-    if (existing) {
-      return existing;
-    }
-
-    return this.createStudent(enrollment, rollNumber);
   }
 }
