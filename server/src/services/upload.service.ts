@@ -37,12 +37,8 @@ export class UploadService {
     // 3. Parse the PDF
     const students = await this.pdfParser.extractText(file.path);
 
-    // 4. Save or update students
+    // 4. Save only the debug student
     for (const student of students) {
-      console.log("\n======================================");
-      console.log("Processing Student:", student.enrollment);
-      console.log("======================================");
-
       const dbStudent = await this.studentRepository.upsertStudent(
         student.enrollment,
         student.rollNumber,
@@ -58,13 +54,6 @@ export class UploadService {
               subject.total >= criteria.minimumTotal),
         );
 
-      console.log({
-        enrollment: student.enrollment,
-        sgpa: student.sgpa,
-        totalCredits: student.totalCredits,
-        totalGradePoints: student.totalGradePoints,
-      });
-
       const result = await this.resultRepository.createResult({
         studentId: dbStudent.id,
         uploadId: upload.id,
@@ -75,26 +64,6 @@ export class UploadService {
       });
 
       for (const subject of student.subjects) {
-        console.log(
-          `Saving Subject -> ${student.enrollment} | ${subject.subjectCode}`,
-        );
-
-        console.log({
-          resultId: result.id,
-
-          subjectCode: subject.subjectCode,
-          subjectName: subject.subjectName,
-
-          internal: subject.internal,
-          external: subject.external,
-          total: subject.total,
-
-          grade: subject.grade,
-
-          credits: subject.credits,
-          gradePoints: subject.gradePoints,
-        });
-
         await this.subjectRepository.createSubject({
           resultId: result.id,
 
@@ -111,15 +80,8 @@ export class UploadService {
           gradePoints: subject.gradePoints,
         });
       }
-
-      console.log(`Finished Student ${student.enrollment}`);
     }
 
-    console.log("\n======================================");
-    console.log("UPLOAD COMPLETED SUCCESSFULLY");
-    console.log("======================================");
-
-    // 5. Return response
     return {
       success: true,
       message: "File uploaded successfully.",
@@ -128,8 +90,6 @@ export class UploadService {
       criteria,
 
       totalStudents: students.length,
-
-      students,
     };
   }
 }

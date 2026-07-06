@@ -21,18 +21,32 @@ The system automatically extracts students, subjects, grades, SGPA, credits and 
 - ✅ Duplicate Student Prevention (Upsert)
 - ✅ PostgreSQL Database Integration
 - ✅ Relational Database Design
-- ✅ Upload History
 - ✅ Pass Criteria Storage
+- ✅ Get Student Result API
+
+# REST API
+
+Current Endpoints
+
+POST /api/upload
+Upload a university result PDF.
+
+GET /api/students
+Retrieve all students.
+
+GET /api/students/:enrollment
+Retrieve a student's latest result.
 
 ## Coming Soon
 
-- Student Search
+- Student Search & Filtering
 - Statistics Dashboard
 - Result Filtering
 - Topper Analysis
 - Downloadable Report Cards
 - Authentication
 - Frontend Dashboard
+- Upload History
 
 ---
 
@@ -113,7 +127,7 @@ PDF Parsing ██████████ 100%
 
 Result Import ██████████ 100%
 
-Statistics API █░░░░░░░░░ 10%
+REST API ██████░░░░ 60%
 
 Frontend ░░░░░░░░░░ 0%
 

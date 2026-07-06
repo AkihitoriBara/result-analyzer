@@ -8,7 +8,7 @@ export class SubjectParser {
   }
 
   private isGrade(value: string): boolean {
-    return ["O", "A+", "A", "B+", "B", "C", "D", "F"].includes(value);
+    return ["O", "A+", "A", "B+", "B", "C", "D", "F"].includes(value.trim());
   }
 
   private calculateGrade(total: number): string {
@@ -33,14 +33,15 @@ export class SubjectParser {
       const external = this.toNumber(words[index++]);
       const total = this.toNumber(words[index++]);
 
-      let grade = words[index++];
+      let grade = words[index++].trim();
       let rawGradePoints: string;
 
-      // Some PDFs omit the grade and put GP immediately after Total.
+      // Read the grade if present.
+      // If the grade is missing, calculate it from the total marks.
       if (this.isGrade(grade)) {
-        rawGradePoints = words[index++];
+        rawGradePoints = words[index++].trim();
       } else {
-        rawGradePoints = grade;
+        rawGradePoints = grade.trim();
         grade = this.calculateGrade(total);
       }
 
