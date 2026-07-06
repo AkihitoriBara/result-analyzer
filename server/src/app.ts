@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 
 import uploadRoutes from "./routes/upload.routes.js";
+import studentRoutes from "./routes/student.routes.js";
 
 const app = express();
 
@@ -16,5 +17,8 @@ app.use("/api", uploadRoutes);
 app.get("/", (req, res) => {
   res.send("Hello from Result Analyzer Backend!");
 });
+
+// getting student
+app.use("/api/students", studentRoutes);
 
 export default app;

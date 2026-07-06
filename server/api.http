@@ -1,0 +1,12 @@
+@baseUrl = http://localhost:5000
+
+### Test Server
+GET {{baseUrl}}
+
+
+### Get All Students
+GET {{baseUrl}}/api/students
+
+
+### Get Student Result
+GET {{baseUrl}}/api/students/2501442015
