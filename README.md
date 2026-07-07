@@ -22,31 +22,75 @@ The system automatically extracts students, subjects, grades, SGPA, credits and 
 - ✅ PostgreSQL Database Integration
 - ✅ Relational Database Design
 - ✅ Pass Criteria Storage
-- ✅ Get Student Result API
+- ✅ Student Result API
+- ✅ Student Search API
+- ✅ Statistics API
+- ✅ Upload History API
+- ✅ Topper API
+- ✅ Top 10 Toppers API
+
+---
 
 # REST API
 
-Current Endpoints
+## Upload
 
-POST /api/upload
+POST `/api/upload`
+
 Upload a university result PDF.
 
-GET /api/students
+GET `/api/uploads`
+
+Retrieve upload history.
+
+---
+
+## Students
+
+GET `/api/students`
+
 Retrieve all students.
 
-GET /api/students/:enrollment
+GET `/api/students/:enrollment`
+
 Retrieve a student's latest result.
+
+GET `/api/students/search?enrollment=2501442132`
+
+Search a student by enrollment number.
+
+---
+
+## Statistics
+
+GET `/api/statistics`
+
+Retrieve overall class statistics.
+
+---
+
+## Results
+
+GET `/api/results/topper`
+
+Retrieve the class topper.
+
+GET `/api/results/top10`
+
+Retrieve the Top 10 students by SGPA.
+
+---
 
 ## Coming Soon
 
-- Student Search & Filtering
-- Statistics Dashboard
 - Result Filtering
-- Topper Analysis
-- Downloadable Report Cards
+- Dashboard
 - Authentication
+- Admin Panel
+- Report Card Generation
+- Subject Statistics
+- Upload Comparison
 - Frontend Dashboard
-- Upload History
 
 ---
 
@@ -73,7 +117,7 @@ Retrieve a student's latest result.
 
 # 📂 Project Structure
 
-```
+```text
 result-analyzer/
 
 client/
@@ -85,6 +129,9 @@ server/
     PDF Parser
     Database
     API
+
+docs/
+    development_log.md
 
 README.md
 ```
@@ -127,7 +174,7 @@ PDF Parsing ██████████ 100%
 
 Result Import ██████████ 100%
 
-REST API ██████░░░░ 60%
+REST API ██████████ 100%
 
 Frontend ░░░░░░░░░░ 0%
 
@@ -135,7 +182,7 @@ Frontend ░░░░░░░░░░ 0%
 
 # Roadmap
 
-## Version 1
+## Version 1 ✅
 
 - [x] Backend Setup
 - [x] Database Design
@@ -145,20 +192,26 @@ Frontend ░░░░░░░░░░ 0%
 - [x] Subject Parser
 - [x] Result Import
 - [x] Pass / Fail Analysis
+- [x] Student Search
+- [x] Statistics API
+- [x] Upload History API
+- [x] Topper API
+- [x] Top 10 API
 
 ## Version 2
 
-- [ ] Search API
-- [ ] Statistics API
 - [ ] Dashboard
-- [ ] Upload History
-- [ ] Filtering
+- [ ] Authentication
+- [ ] Upload Comparison
+- [ ] Result Filtering
+- [ ] Subject Statistics
+- [ ] Report Card Generation
 
 ## Version 3
 
-- [ ] Authentication
 - [ ] Admin Panel
-- [ ] Report Card Generation
+- [ ] User Accounts
+- [ ] Semester Comparison
 - [ ] Deployment
 
 ---

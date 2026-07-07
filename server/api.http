@@ -9,4 +9,19 @@ GET {{baseUrl}}/api/students
 
 
 ### Get Student Result
-GET {{baseUrl}}/api/students/2501442015
+GET {{baseUrl}}/api/students/2501442132
+
+### Get Statistics
+GET {{baseUrl}}/api/statistics
+
+### Get Upload History
+GET {{baseUrl}}/api/uploads
+
+### Get Topper
+GET {{baseUrl}}/api/results/topper
+
+### Get Top 10 Students
+GET {{baseUrl}}/api/results/top10
+
+### Search Student by Enrollment
+GET {{baseUrl}}/api/students/search?enrollment=2501442132

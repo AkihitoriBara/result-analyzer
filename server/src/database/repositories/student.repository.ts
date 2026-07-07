@@ -17,6 +17,7 @@ export class StudentRepository {
       },
     });
   }
+
   async getAllStudents() {
     return prisma.student.findMany({
       orderBy: {
@@ -24,12 +25,12 @@ export class StudentRepository {
       },
     });
   }
+
   async getStudentResult(enrollment: string) {
     return prisma.student.findUnique({
       where: {
         enrollment,
       },
-
       include: {
         results: {
           include: {
@@ -42,6 +43,14 @@ export class StudentRepository {
 
           take: 1,
         },
+      },
+    });
+  }
+
+  async searchByEnrollment(enrollment: string) {
+    return prisma.student.findUnique({
+      where: {
+        enrollment,
       },
     });
   }

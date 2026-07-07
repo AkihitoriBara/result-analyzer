@@ -6,6 +6,8 @@ const router = Router();
 
 const uploadController = new UploadController();
 
+router.get("/uploads", (req, res) => uploadController.getAllUploads(req, res));
+
 router.post(
   "/upload",
   upload.single("resultPdf"),

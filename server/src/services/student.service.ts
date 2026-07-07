@@ -20,4 +20,14 @@ export class StudentService {
 
     return student;
   }
+
+  async searchByEnrollment(enrollment: string) {
+    const student = await this.studentRepository.searchByEnrollment(enrollment);
+
+    if (!student) {
+      throw new Error("No student found with this enrollment number.");
+    }
+
+    return student;
+  }
 }

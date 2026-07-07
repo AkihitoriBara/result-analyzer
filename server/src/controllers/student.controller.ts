@@ -24,4 +24,22 @@ export class StudentController {
       student,
     });
   }
+
+  async searchByEnrollment(req: Request, res: Response) {
+    const { enrollment } = req.query;
+
+    if (typeof enrollment !== "string") {
+      return res.status(400).json({
+        success: false,
+        message: "Enrollment number is required.",
+      });
+    }
+
+    const student = await this.studentService.searchByEnrollment(enrollment);
+
+    return res.json({
+      success: true,
+      student,
+    });
+  }
 }

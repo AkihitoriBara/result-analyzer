@@ -7,6 +7,10 @@ const studentController = new StudentController();
 
 router.get("/", (req, res) => studentController.getAllStudents(req, res));
 
+router.get("/search", (req, res) =>
+  studentController.searchByEnrollment(req, res),
+);
+
 router.get("/:enrollment", (req, res) =>
   studentController.getStudentResult(req, res),
 );

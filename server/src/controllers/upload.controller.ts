@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import { UploadService } from "../services/upload.service.js";
 
-const uploadService = new UploadService();
-
 export class UploadController {
+  private uploadService = new UploadService();
   async upload(req: Request, res: Response) {
     const file = req.file;
 
@@ -14,8 +13,18 @@ export class UploadController {
       });
     }
 
-    const result = await uploadService.uploadFile(file);
+    const result = await this.uploadService.uploadFile(file);
 
     return res.status(200).json(result);
+  }
+
+  async getAllUploads(req: Request, res: Response) {
+    const uploads = await this.uploadService.getAllUploads();
+
+    return res.json({
+      success: true,
+      count: uploads.length,
+      uploads,
+    });
   }
 }

@@ -16,4 +16,30 @@ export class ResultRepository {
       data,
     });
   }
+
+  async getTopper() {
+    return prisma.result.findFirst({
+      orderBy: {
+        sgpa: "desc",
+      },
+
+      include: {
+        student: true,
+        subjects: true,
+      },
+    });
+  }
+
+  async getTop10Toppers() {
+    return prisma.result.findMany({
+      orderBy: {
+        sgpa: "desc",
+      },
+
+      take: 10,
+      include: {
+        student: true,
+      },
+    });
+  }
 }

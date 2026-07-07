@@ -92,4 +92,8 @@ export class UploadService {
       totalStudents: students.length,
     };
   }
+
+  async getAllUploads() {
+    return this.uploadRepository.getAllUploads();
+  }
 }

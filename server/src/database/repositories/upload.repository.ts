@@ -12,4 +12,11 @@ export class UploadRepository {
       data,
     });
   }
+  async getAllUploads() {
+    return prisma.upload.findMany({
+      orderBy: {
+        uploadedAt: "desc",
+      },
+    });
+  }
 }

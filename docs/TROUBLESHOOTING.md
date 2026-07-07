@@ -41,9 +41,9 @@ SGPA: NaN
 
 ### Cause
 
-Some subjects contained "-"
+Some subjects contained "-".
 
-Number("-") returned NaN.
+`Number("-")` returned `NaN`.
 
 ### Fix
 
@@ -55,16 +55,15 @@ Treat "-" as 0 grade points.
 
 ## Prisma
 
-Argument student is missing
+Argument `student` is missing.
 
 ### Cause
 
-Wrong relation usage while creating Result.
+Wrong relation usage while creating `Result`.
 
 ### Fix
 
-Create Student first.
-Pass studentId.
+Create the Student first and pass `studentId`.
 
 ---
 
@@ -74,41 +73,39 @@ Pass studentId.
 
 ### Cause
 
-SubjectRepository was never called.
+`SubjectRepository` was never called.
 
 ### Fix
 
-After creating Result, iterate through every subject and create SubjectResult.
+After creating `Result`, iterate through every subject and create `SubjectResult`.
 
 ---
 
 # Bug #5
 
-## Grade undefined
+## Grade was undefined
 
 ### Cause
 
-SubjectRepository forgot to send
-
-grade
-
-to Prisma.
+`SubjectRepository` forgot to send the `grade` field to Prisma.
 
 ### Fix
 
 Added
 
-grade: subject.grade
+```ts
+grade: subject.grade;
+```
 
 ---
 
 # Bug #6
 
-## With-held students crashed parser
+## With-held students crashed the parser
 
 ### Symptoms
 
-SGPA became NaN.
+SGPA became `NaN`.
 
 ### Cause
 
@@ -116,62 +113,112 @@ With-held students have no subject data.
 
 ### Fix
 
-Return empty subject list.
+Return an empty subject list and zero SGPA values.
 
 ---
 
 # Bug #7
 
-## Sustainable Energy omitted grade
+## Sustainable Energy omitted the grade column
 
 ### Symptoms
 
-Last subject became misaligned.
+The final subject became misaligned.
 
 ### Cause
 
-Some PDFs omit the grade but keep grade points.
+Some PDFs omit the grade while still providing grade points.
 
 ### Fix
 
-If no valid grade exists, calculate grade from total marks.
+If no valid grade exists, calculate the grade from the total marks.
 
 ---
 
 # Bug #8
 
-## Grade contained whitespace
+## Grades contained whitespace
 
 ### Symptoms
 
-"C"
+Values such as
 
-was not recognized.
+```
+" C "
+```
+
+were not recognized.
 
 ### Cause
 
-pdf2json returned
-
-" C "
-
-instead of
-
-"C"
+`pdf2json` preserved surrounding whitespace.
 
 ### Fix
 
-Use
+Use `.trim()` before validating grades.
 
-.trim()
+---
 
-before checking grades.
+# Bug #9
+
+## Incorrect SGPA and Grade Points
+
+### Symptoms
+
+- SGPA values were much higher than expected.
+- Grade points appeared as `0`, `58`, `16`, etc.
+- Subject data shifted after the first subject.
+
+### Cause
+
+The parser treated `" C "` as grade points instead of a grade because whitespace prevented recognition.
+
+### Fix
+
+Trim whitespace before checking grades.
+
+```ts
+grade = words[index++].trim();
+
+private isGrade(value: string) {
+  return ["O", "A+", "A", "B+", "B", "C", "D", "F"].includes(value.trim());
+}
+```
+
+---
+
+# Bug #10
+
+## PDF Parsing Was Difficult to Debug
+
+### Symptoms
+
+Debugging the parser was difficult because all 145 students were processed during every upload.
+
+### Cause
+
+Large console output made it nearly impossible to identify where parsing first failed.
+
+### Fix
+
+Temporary debugging tools were added to:
+
+- Parse a single student.
+- Print raw parser tokens.
+- Inspect parser indexes.
+- Compare parsed values directly against the original PDF.
+
+All debugging code was removed after the parser was verified.
 
 ---
 
 # Lessons Learned
 
 - Never trust PDF formatting.
-- Always inspect raw tokens.
+- Always inspect raw parser tokens.
+- Trim extracted text before validation.
+- Parser bugs usually cascade into every field after the first mistake.
+- Validate parser output against the original PDF, not only against database values.
 - Debug one student at a time.
-- Validate parser output against the original PDF.
-- Separate parser logic from database logic.
+- Separate parsing logic from business logic and database operations.
+- Build small, testable layers (Parser → Service → Repository → Controller).
