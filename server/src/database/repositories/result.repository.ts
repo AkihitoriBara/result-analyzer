@@ -42,4 +42,31 @@ export class ResultRepository {
       },
     });
   }
+
+  async getAllResults() {
+    return prisma.result.findMany({
+      orderBy: [
+        {
+          student: {
+            enrollment: "asc",
+          },
+        },
+      ],
+
+      include: {
+        student: {
+          select: {
+            enrollment: true,
+            rollNumber: true,
+          },
+        },
+
+        upload: {
+          select: {
+            semester: true,
+          },
+        },
+      },
+    });
+  }
 }

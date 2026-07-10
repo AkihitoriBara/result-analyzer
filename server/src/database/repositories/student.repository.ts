@@ -35,6 +35,12 @@ export class StudentRepository {
         results: {
           include: {
             subjects: true,
+
+            upload: {
+              select: {
+                semester: true,
+              },
+            },
           },
 
           orderBy: {
@@ -48,9 +54,33 @@ export class StudentRepository {
   }
 
   async searchByEnrollment(enrollment: string) {
-    return prisma.student.findUnique({
+    return prisma.student.findMany({
       where: {
-        enrollment,
+        enrollment: {
+          startsWith: enrollment,
+        },
+      },
+
+      include: {
+        results: {
+          include: {
+            upload: {
+              select: {
+                semester: true,
+              },
+            },
+          },
+
+          orderBy: {
+            createdAt: "desc",
+          },
+
+          take: 1,
+        },
+      },
+
+      orderBy: {
+        enrollment: "asc",
       },
     });
   }

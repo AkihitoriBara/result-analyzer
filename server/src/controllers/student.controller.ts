@@ -35,11 +35,12 @@ export class StudentController {
       });
     }
 
-    const student = await this.studentService.searchByEnrollment(enrollment);
+    const students = await this.studentService.searchByEnrollment(enrollment);
 
     return res.json({
       success: true,
-      student,
+      count: students.length,
+      students,
     });
   }
 }

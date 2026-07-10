@@ -7,9 +7,14 @@ GET {{baseUrl}}
 ### Get All Students
 GET {{baseUrl}}/api/students
 
+### Get All Results
+GET {{baseUrl}}/api/results
+
 
 ### Get Student Result
 GET {{baseUrl}}/api/students/2501442132
+
+
 
 ### Get Statistics
 GET {{baseUrl}}/api/statistics
