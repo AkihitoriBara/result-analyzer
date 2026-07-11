@@ -8,6 +8,10 @@ const uploadController = new UploadController();
 
 router.get("/uploads", (req, res) => uploadController.getAllUploads(req, res));
 
+router.delete("/uploads/:id", (req, res) =>
+  uploadController.deleteUpload(req, res),
+);
+
 router.post(
   "/upload",
   upload.single("resultPdf"),
