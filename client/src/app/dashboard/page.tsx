@@ -3,6 +3,7 @@ import AppShell from "@/components/layout/AppShell";
 import DashboardStats from "@/components/dashboard/DashboardStats";
 import RecentUploads from "@/components/dashboard/RecentUploads";
 import TopStudents from "@/components/dashboard/TopStudents";
+import PerformanceOverview from "@/components/dashboard/PerformanceOverview";
 
 export default function DashboardPage() {
   return (
@@ -18,21 +19,8 @@ export default function DashboardPage() {
           <TopStudents />
         </section>
 
-        {/* Performance Overview (Coming Soon) */}
-        <section className="rounded-2xl border border-border bg-card p-6">
-          <h2 className="text-lg font-semibold">Performance Overview</h2>
-
-          <p className="mt-2 text-sm text-muted-foreground">
-            Charts and performance analytics will be available in a future
-            update.
-          </p>
-
-          <div className="mt-6 flex h-72 items-center justify-center rounded-xl border border-dashed border-border">
-            <span className="text-sm text-muted-foreground">
-              Chart Placeholder
-            </span>
-          </div>
-        </section>
+        {/* Performance Overview Preview */}
+        <PerformanceOverview />
       </div>
     </AppShell>
   );

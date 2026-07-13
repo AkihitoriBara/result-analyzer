@@ -2,6 +2,27 @@ import { Upload } from "@/types/upload";
 
 const API_URL = "http://localhost:5000/api";
 
+export type SubjectTopper = {
+  enrollment: string;
+  rollNumber: string;
+  total: number;
+};
+
+export type SubjectStats = {
+  subjectCode: string;
+  subjectName: string;
+  averageInternal: number;
+  averageExternal: number;
+  averageTotal: number;
+  averageGradePoints: number;
+  passPercentage: number;
+  totalStudents: number;
+  passedStudents: number;
+  failedStudents: number;
+  gradeDistribution: Record<string, number>;
+  topper: SubjectTopper | null;
+};
+
 export type DashboardStatistics = {
   totalStudents: number;
   passedStudents: number;
@@ -10,6 +31,27 @@ export type DashboardStatistics = {
   highestSGPA: number;
   lowestSGPA: number;
   passPercentage: number;
+  subjectStats?: SubjectStats[];
+  hardestSubject?: {
+    subjectCode: string;
+    subjectName: string;
+    passPercentage: number;
+  } | null;
+  easiestSubject?: {
+    subjectCode: string;
+    subjectName: string;
+    passPercentage: number;
+  } | null;
+  highestAverageSubject?: {
+    subjectCode: string;
+    subjectName: string;
+    averageTotal: number;
+  } | null;
+  lowestAverageSubject?: {
+    subjectCode: string;
+    subjectName: string;
+    averageTotal: number;
+  } | null;
 };
 
 export type TopStudent = {

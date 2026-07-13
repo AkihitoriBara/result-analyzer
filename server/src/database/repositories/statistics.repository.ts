@@ -40,4 +40,26 @@ export class StatisticsRepository {
       lowestSGPA: sgpaStats._min.sgpa ?? 0,
     };
   }
+
+  async getSubjectResultsWithDetails() {
+    return prisma.subjectResult.findMany({
+      include: {
+        result: {
+          include: {
+            student: {
+              select: {
+                enrollment: true,
+                rollNumber: true,
+              },
+            },
+            upload: {
+              include: {
+                criteria: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
 }

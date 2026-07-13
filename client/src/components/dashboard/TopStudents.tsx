@@ -36,8 +36,24 @@ export default function TopStudents() {
   }, []);
 
   return (
-    <section className="rounded-2xl border border-border bg-card p-6">
-      <div className="mb-6">
+    <section className="rounded-2xl border border-border bg-card p-6 h-[480px] flex flex-col justify-between">
+      <style dangerouslySetInnerHTML={{__html: `
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(6, 182, 212, 0.15);
+          border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(6, 182, 212, 0.35);
+        }
+      `}} />
+
+      <div className="mb-6 flex-shrink-0">
         <h2 className="text-lg font-semibold">Top Students</h2>
 
         <p className="mt-1 text-sm text-muted-foreground">
@@ -46,19 +62,19 @@ export default function TopStudents() {
       </div>
 
       {status === "loading" && (
-        <div className="rounded-xl border border-border p-6 text-sm text-muted-foreground">
+        <div className="flex-1 rounded-xl border border-border p-6 text-sm text-muted-foreground">
           Loading top students...
         </div>
       )}
 
       {status === "error" && (
-        <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-6 text-sm text-red-400">
+        <div className="flex-1 rounded-xl border border-red-500/20 bg-red-500/10 p-6 text-sm text-red-400">
           Failed to load top students.
         </div>
       )}
 
       {status === "empty" && (
-        <div className="rounded-xl border border-dashed border-border p-8 text-center">
+        <div className="flex-1 rounded-xl border border-dashed border-border p-8 text-center flex flex-col items-center justify-center">
           <p className="text-sm text-muted-foreground">
             No student results have been imported yet.
           </p>
@@ -73,7 +89,7 @@ export default function TopStudents() {
       )}
 
       {status === "success" && (
-        <div className="space-y-3">
+        <div className="flex-1 overflow-y-auto space-y-3 pr-1.5 custom-scrollbar">
           {students.map((student, index) => (
             <StudentRank
               key={student.id}
@@ -88,7 +104,7 @@ export default function TopStudents() {
       )}
 
       {status === "success" && (
-        <div className="mt-6 border-t border-border pt-4">
+        <div className="mt-6 border-t border-border pt-4 flex-shrink-0">
           <Link
             href="/students"
             className="text-sm font-medium text-cyan-400 transition-colors hover:text-cyan-300"
