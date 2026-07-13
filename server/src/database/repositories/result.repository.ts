@@ -39,6 +39,11 @@ export class ResultRepository {
       take: 10,
       include: {
         student: true,
+        upload: {
+          select: {
+            semester: true,
+          },
+        },
       },
     });
   }

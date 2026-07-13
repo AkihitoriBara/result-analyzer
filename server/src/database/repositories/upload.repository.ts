@@ -18,6 +18,13 @@ export class UploadRepository {
       orderBy: {
         uploadedAt: "desc",
       },
+      include: {
+        _count: {
+          select: {
+            results: true,
+          },
+        },
+      },
     });
   }
 

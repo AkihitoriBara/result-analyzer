@@ -1,29 +1,40 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+import {
+  getRecentUploads,
+  RecentUpload,
+} from "@/services/dashboard.service";
 
 import UploadItem from "./UploadItem";
 
-const uploads = [
-  {
-    fileName: "Semester 4 Results.pdf",
-    status: "Processed" as const,
-    uploadedAt: "2 min ago",
-    fileSize: "4.8 MB",
-  },
-  {
-    fileName: "Semester 3 Results.pdf",
-    status: "Processed" as const,
-    uploadedAt: "Yesterday",
-    fileSize: "5.1 MB",
-  },
-  {
-    fileName: "Semester 2 Results.pdf",
-    status: "Processed" as const,
-    uploadedAt: "3 days ago",
-    fileSize: "4.6 MB",
-  },
-];
+type SectionStatus = "loading" | "success" | "empty" | "error";
 
 export default function RecentUploads() {
+  const [uploads, setUploads] = useState<RecentUpload[]>([]);
+  const [status, setStatus] = useState<SectionStatus>("loading");
+
+  useEffect(() => {
+    async function loadRecentUploads() {
+      setStatus("loading");
+
+      try {
+        const data = await getRecentUploads();
+
+        setUploads(data);
+        setStatus(data.length === 0 ? "empty" : "success");
+      } catch (error) {
+        console.error(error);
+        setUploads([]);
+        setStatus("error");
+      }
+    }
+
+    loadRecentUploads();
+  }, []);
+
   return (
     <section className="rounded-2xl border border-border bg-card p-6">
       <div className="mb-6">
@@ -34,26 +45,57 @@ export default function RecentUploads() {
         </p>
       </div>
 
-      <div className="space-y-3">
-        {uploads.map((upload) => (
-          <UploadItem
-            key={upload.fileName}
-            fileName={upload.fileName}
-            status={upload.status}
-            uploadedAt={upload.uploadedAt}
-            fileSize={upload.fileSize}
-          />
-        ))}
-      </div>
+      {status === "loading" && (
+        <div className="rounded-xl border border-border p-6 text-sm text-muted-foreground">
+          Loading recent uploads...
+        </div>
+      )}
 
-      <div className="mt-6 border-t border-border pt-4">
-        <Link
-          href="/uploads"
-          className="text-sm font-medium text-cyan-400 transition-colors hover:text-cyan-300"
-        >
-          View all uploads →
-        </Link>
-      </div>
+      {status === "error" && (
+        <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-6 text-sm text-red-400">
+          Failed to load recent uploads.
+        </div>
+      )}
+
+      {status === "empty" && (
+        <div className="rounded-xl border border-dashed border-border p-8 text-center">
+          <p className="text-sm text-muted-foreground">
+            No result PDFs have been uploaded yet.
+          </p>
+
+          <Link
+            href="/uploads"
+            className="mt-4 inline-flex rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-400 transition-colors hover:bg-cyan-500/20"
+          >
+            Go to Uploads
+          </Link>
+        </div>
+      )}
+
+      {status === "success" && (
+        <div className="space-y-3">
+          {uploads.map((upload) => (
+            <UploadItem
+              key={upload.id}
+              fileName={upload.fileName}
+              semester={upload.semester}
+              uploadedAt={upload.uploadedAt}
+              studentCount={upload.studentCount}
+            />
+          ))}
+        </div>
+      )}
+
+      {status === "success" && (
+        <div className="mt-6 border-t border-border pt-4">
+          <Link
+            href="/uploads"
+            className="text-sm font-medium text-cyan-400 transition-colors hover:text-cyan-300"
+          >
+            View all uploads →
+          </Link>
+        </div>
+      )}
     </section>
   );
 }

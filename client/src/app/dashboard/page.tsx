@@ -23,8 +23,8 @@ export default function DashboardPage() {
           <h2 className="text-lg font-semibold">Performance Overview</h2>
 
           <p className="mt-2 text-sm text-muted-foreground">
-            Charts and performance analytics will appear here once we connect
-            the dashboard to the backend.
+            Charts and performance analytics will be available in a future
+            update.
           </p>
 
           <div className="mt-6 flex h-72 items-center justify-center rounded-xl border border-dashed border-border">
