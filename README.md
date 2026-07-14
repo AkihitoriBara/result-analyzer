@@ -1,96 +1,70 @@
-# 📄 Result Analyzer
+# 📊 Result Analyzer
 
-A full-stack web application that converts university semester result PDFs into a searchable academic database.
+A full-stack academic analytics platform that converts university semester result PDFs into a searchable database and interactive dashboard.
 
-The system automatically extracts students, subjects, grades, SGPA, credits and pass/fail information from official university result sheets and stores them in PostgreSQL for further analysis.
+The application automatically extracts students, subjects, grades, SGPA, credits, and pass/fail information from official university result sheets, stores them in PostgreSQL, and visualizes class performance through modern analytics.
 
 ---
 
 # ✨ Features
 
-## Completed
+## 📥 Result Processing
 
-- ✅ PDF Upload API
-- ✅ Automatic PDF Parsing
-- ✅ Student Extraction
-- ✅ Subject Extraction
-- ✅ SGPA Calculation
-- ✅ Total Credits Calculation
-- ✅ Grade Point Calculation
-- ✅ Automatic Pass / Fail Detection
-- ✅ Duplicate Student Prevention (Upsert)
-- ✅ PostgreSQL Database Integration
-- ✅ Relational Database Design
-- ✅ Pass Criteria Storage
-- ✅ Student Result API
-- ✅ Student Search API
-- ✅ Statistics API
-- ✅ Upload History API
-- ✅ Topper API
-- ✅ Top 10 Toppers API
+- Upload official university result PDFs
+- Automatic PDF parsing
+- Student extraction
+- Subject extraction
+- SGPA calculation
+- Credit calculation
+- Grade point calculation
+- Automatic pass/fail detection
+- Duplicate student prevention (Upsert)
 
 ---
 
-# REST API
+## 👨‍🎓 Student Management
 
-## Upload
-
-POST `/api/upload`
-
-Upload a university result PDF.
-
-GET `/api/uploads`
-
-Retrieve upload history.
+- Student directory
+- Enrollment search
+- Expandable student result cards
+- Subject-wise mark breakdown
+- Latest result retrieval
 
 ---
 
-## Students
+## 📈 Analytics Dashboard
 
-GET `/api/students`
-
-Retrieve all students.
-
-GET `/api/students/:enrollment`
-
-Retrieve a student's latest result.
-
-GET `/api/students/search?enrollment=2501442132`
-
-Search a student by enrollment number.
-
----
-
-## Statistics
-
-GET `/api/statistics`
-
-Retrieve overall class statistics.
+- Dashboard overview
+- Total students
+- Pass percentage
+- Average / Highest / Lowest SGPA
+- Recent uploads
+- Top 10 students
+- Subject performance radar chart
+- Subject comparison chart
+- Hardest subject detection
+- Easiest subject detection
+- Highest subject average
+- Lowest subject average
+- Detailed subject breakdown
 
 ---
 
-## Results
+## ⚙ Backend
 
-GET `/api/results/topper`
-
-Retrieve the class topper.
-
-GET `/api/results/top10`
-
-Retrieve the Top 10 students by SGPA.
+- REST API
+- PostgreSQL integration
+- Prisma ORM
+- Relational database
+- Upload history
+- Statistics aggregation
+- Topper calculation
 
 ---
 
-## Coming Soon
+# 📷 Screenshots
 
-- Result Filtering
-- Dashboard
-- Authentication
-- Admin Panel
-- Report Card Generation
-- Subject Statistics
-- Upload Comparison
-- Frontend Dashboard
+> Screenshots will be added after Version 1 release.
 
 ---
 
@@ -98,10 +72,10 @@ Retrieve the Top 10 students by SGPA.
 
 ## Frontend
 
-- Next.js
+- Next.js (App Router)
 - React
 - TypeScript
-- TailwindCSS
+- Tailwind CSS
 - shadcn/ui
 
 ## Backend
@@ -109,7 +83,7 @@ Retrieve the Top 10 students by SGPA.
 - Express
 - TypeScript
 - Prisma ORM
-- PostgreSQL (Neon)
+- PostgreSQL
 - Multer
 - pdf2json
 
@@ -121,26 +95,69 @@ Retrieve the Top 10 students by SGPA.
 result-analyzer/
 
 client/
-    Next.js frontend
-
+│
+├── src/
+│   ├── app/
+│   ├── components/
+│   ├── services/
+│   └── types/
+│
 server/
-    Express backend
-    Prisma
-    PDF Parser
-    Database
-    API
-
-docs/
-    development_log.md
-
+│
+├── src/
+│   ├── controllers/
+│   ├── services/
+│   ├── parser/
+│   ├── database/
+│   ├── routes/
+│   └── middleware/
+│
 README.md
 ```
 
 ---
 
-# Database
+# 🌐 REST API
 
-Current database tables
+## Uploads
+
+| Method | Endpoint |
+|--------|----------|
+| POST | `/api/upload` |
+| GET | `/api/uploads` |
+
+---
+
+## Students
+
+| Method | Endpoint |
+|--------|----------|
+| GET | `/api/students` |
+| GET | `/api/students/:enrollment` |
+| GET | `/api/students/search?enrollment=...` |
+
+---
+
+## Results
+
+| Method | Endpoint |
+|--------|----------|
+| GET | `/api/results/topper` |
+| GET | `/api/results/top10` |
+
+---
+
+## Statistics
+
+| Method | Endpoint |
+|--------|----------|
+| GET | `/api/statistics` |
+
+---
+
+# 🗄 Database
+
+Current tables
 
 - Student
 - Result
@@ -150,86 +167,97 @@ Current database tables
 
 Relationships
 
+```text
 Student
-└── Results
-└── Subject Results
+ └── Result
+      └── SubjectResult
 
 Upload
-└── Results
+ └── Result
 
 PassCriteria
-└── Upload
+ └── Upload
+```
 
 ---
 
-# Current Progress
+# 🚀 Current Progress
 
-Backend Setup ██████████ 100%
+Backend ██████████ 100%
 
-Database Design ██████████ 100%
+Frontend ██████████ 100%
 
-PDF Upload ██████████ 100%
+Analytics ██████████ 100%
 
-PDF Parsing ██████████ 100%
-
-Result Import ██████████ 100%
-
-REST API ██████████ 100%
-
-Frontend ░░░░░░░░░░ 0%
+Version 1 ██████████ 100%
 
 ---
 
-# Roadmap
+# 🛣 Roadmap
 
-## Version 1 ✅
+## ✅ Version 1
 
-- [x] Backend Setup
-- [x] Database Design
-- [x] PDF Upload
-- [x] PDF Parsing
-- [x] Student Parser
-- [x] Subject Parser
-- [x] Result Import
-- [x] Pass / Fail Analysis
-- [x] Student Search
-- [x] Statistics API
-- [x] Upload History API
-- [x] Topper API
-- [x] Top 10 API
-
-## Version 2
-
-- [ ] Dashboard
-- [ ] Authentication
-- [ ] Upload Comparison
-- [ ] Result Filtering
-- [ ] Subject Statistics
-- [ ] Report Card Generation
-
-## Version 3
-
-- [ ] Admin Panel
-- [ ] User Accounts
-- [ ] Semester Comparison
-- [ ] Deployment
+- PDF Upload
+- PDF Parsing
+- Student Extraction
+- Subject Extraction
+- PostgreSQL Integration
+- Dashboard
+- Student Directory
+- Academic Analytics
+- Radar Chart
+- Subject Comparison
+- Top Students
+- Upload History
 
 ---
 
-# Goal
+## 🚧 Version 2
 
-Transform large university result PDFs into structured relational data that can be searched, analyzed and visualized through a modern web interface.
+- Authentication
+- Multi-semester support
+- Semester comparison
+- Advanced filtering
+- Export reports
+- PDF report generation
 
 ---
 
-# Author
+## 🔮 Version 3
 
-Built as a personal learning project to explore:
+- AI-powered insights
+- Faculty dashboard
+- Department analytics
+- Multi-user support
+- Role-based permissions
+- Deployment
+
+---
+
+# 🎯 Project Goal
+
+Transform large university result PDFs into structured relational data that can be searched, analyzed, and visualized through a modern academic dashboard.
+
+---
+
+# 📚 What I Learned
+
+This project was built as a personal software engineering project to gain hands-on experience with:
 
 - TypeScript
+- React
+- Next.js
 - Express
 - Prisma ORM
 - PostgreSQL
-- PDF Parsing
-- Backend Architecture
-- REST API Design
+- REST API design
+- PDF parsing
+- Data visualization
+- Software architecture
+- Full-stack application development
+
+---
+
+# 📄 License
+
+This project is licensed under the MIT License.

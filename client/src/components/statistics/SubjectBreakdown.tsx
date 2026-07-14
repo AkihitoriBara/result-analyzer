@@ -97,9 +97,8 @@ export default function SubjectBreakdown({ subject }: SubjectBreakdownProps) {
                 className="group flex flex-1 flex-col items-center gap-2 h-full justify-end"
               >
                 {/* Tooltip on hover */}
-                <span className={`text-[10px] font-mono text-cyan-400 font-bold transition-opacity duration-150 ${
-                  hasCount ? "opacity-0 group-hover:opacity-100" : "opacity-0"
-                }`}>
+                <span className={`text-[10px] font-mono text-cyan-400 font-bold transition-opacity duration-150 ${hasCount ? "opacity-0 group-hover:opacity-100" : "opacity-0"
+                  }`}>
                   {count}
                 </span>
 
@@ -108,14 +107,13 @@ export default function SubjectBreakdown({ subject }: SubjectBreakdownProps) {
                   style={{ height: `${Math.max(barHeight, 6)}%` }}
                   className={`
                     w-full rounded-t transition-all duration-300
-                    ${
-                      isFailure
-                        ? hasCount
-                          ? "bg-red-500/40 border border-red-500/50 group-hover:bg-red-400"
-                          : "bg-muted/10 border-transparent"
-                        : hasCount
-                          ? "bg-cyan-500/40 border border-cyan-500/50 group-hover:bg-cyan-400"
-                          : "bg-muted/10 border-transparent"
+                    ${isFailure
+                      ? hasCount
+                        ? "bg-red-500/40 border border-red-500/50 group-hover:bg-red-400"
+                        : "bg-muted/10 border-transparent"
+                      : hasCount
+                        ? "bg-cyan-500/40 border border-cyan-500/50 group-hover:bg-cyan-400"
+                        : "bg-muted/10 border-transparent"
                     }
                   `}
                 />

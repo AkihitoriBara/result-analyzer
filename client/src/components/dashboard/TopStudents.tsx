@@ -16,42 +16,28 @@ export default function TopStudents() {
   const [students, setStudents] = useState<TopStudent[]>([]);
   const [status, setStatus] = useState<SectionStatus>("loading");
 
-  useEffect(() => {
-    async function loadTopStudents() {
-      setStatus("loading");
+  const loadTopStudents = async () => {
+  setStatus("loading");
 
-      try {
-        const data = await getTopStudents();
+  try {
+    const data = await getTopStudents();
 
-        setStudents(data);
-        setStatus(data.length === 0 ? "empty" : "success");
-      } catch (error) {
-        console.error(error);
-        setStudents([]);
-        setStatus("error");
-      }
-    }
+    setStudents(data);
+    setStatus(data.length === 0 ? "empty" : "success");
+  } catch (error) {
+    console.error(error);
 
-    loadTopStudents();
-  }, []);
+    setStudents([]);
+    setStatus("error");
+  }
+};
+
+useEffect(() => {
+  loadTopStudents();
+}, []);
 
   return (
     <section className="rounded-2xl border border-border bg-card p-6 h-[480px] flex flex-col justify-between">
-      <style dangerouslySetInnerHTML={{__html: `
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 5px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(6, 182, 212, 0.15);
-          border-radius: 9999px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(6, 182, 212, 0.35);
-        }
-      `}} />
 
       <div className="mb-6 flex-shrink-0">
         <h2 className="text-lg font-semibold">Top Students</h2>

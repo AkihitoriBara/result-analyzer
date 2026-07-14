@@ -56,9 +56,9 @@ export default function AnalyticsOverview({ statistics }: AnalyticsOverviewProps
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {cards.map((card, idx) => (
+      {cards.map((card) => (
         <div
-          key={idx}
+          key={card.title}
           className={`
             rounded-xl border border-border bg-card p-6 flex flex-col justify-between
             transition-all duration-200 hover:shadow-md border-l-4 ${card.borderClass}

@@ -23,18 +23,20 @@ export default function RadarChart({
   if (subjects.length === 0) return null;
 
   // Chart configuration
-  const width = 500;
-  const height = 500;
-  const cx = width / 2;
-  const cy = height / 2;
-  const radius = 190; // Max radius for 100 marks (increased from 170)
+  const CHART_SIZE = 500;
+  const CHART_RADIUS = 190;
+
+  const width = CHART_SIZE;
+  const height = CHART_SIZE;
+  const cx = CHART_SIZE / 2;
+  const cy = CHART_SIZE / 2;
 
   const totalPoints = subjects.length;
 
   // Compute angles for each subject, offset by -pi/2 so first subject is vertical
   const getCoordinates = (index: number, value: number) => {
     const angle = (index * 2 * Math.PI) / totalPoints - Math.PI / 2;
-    const r = (value / 100) * radius;
+    const r = (value / 100) * CHART_RADIUS;
     return {
       x: cx + r * Math.cos(angle),
       y: cy + r * Math.sin(angle),
@@ -118,9 +120,8 @@ export default function RadarChart({
                   x2={outerCoords.x}
                   y2={outerCoords.y}
                   stroke="currentColor"
-                  className={`text-border/30 transition-all duration-300 ${
-                    interactive && hoveredIdx !== null && !isHovered ? "opacity-25" : "opacity-100"
-                  }`}
+                  className={`text-border/30 transition-all duration-300 ${interactive && hoveredIdx !== null && !isHovered ? "opacity-25" : "opacity-100"
+                    }`}
                   strokeWidth={1}
                 />
 
@@ -134,14 +135,13 @@ export default function RadarChart({
                   onMouseLeave={interactive ? () => setHoveredIdx(null) : undefined}
                   className={`
                     text-xs font-semibold transition-all duration-300
-                    ${
-                      isSelected
-                        ? "fill-cyan-400 font-bold"
-                        : isHovered
-                          ? "fill-foreground font-bold scale-105"
-                          : interactive && hoveredIdx !== null
-                            ? "fill-muted-foreground/25"
-                            : "fill-muted-foreground hover:fill-foreground"
+                    ${isSelected
+                      ? "fill-cyan-400 font-bold"
+                      : isHovered
+                        ? "fill-foreground font-bold scale-105"
+                        : interactive && hoveredIdx !== null
+                          ? "fill-muted-foreground/25"
+                          : "fill-muted-foreground hover:fill-foreground"
                     }
                     ${interactive ? "cursor-pointer" : "cursor-default"}
                   `}
@@ -158,9 +158,8 @@ export default function RadarChart({
             fill="rgba(6, 182, 212, 0.12)"
             stroke="rgb(6, 182, 212)"
             strokeWidth={2}
-            className={`transition-all duration-300 ${
-              interactive && hoveredIdx !== null ? "fill-[rgba(6,182,212,0.18)]" : ""
-            }`}
+            className={`transition-all duration-300 ${interactive && hoveredIdx !== null ? "fill-[rgba(6,182,212,0.18)]" : ""
+              }`}
           />
 
           {/* Data points dots */}
@@ -178,14 +177,13 @@ export default function RadarChart({
                   r={isSelected ? 6 : isHovered ? 7.5 : 4.5}
                   className={`
                     pointer-events-none transition-all duration-300 stroke-card stroke-2
-                    ${
-                      isSelected
-                        ? "fill-cyan-400"
-                        : isHovered
-                          ? "fill-cyan-300"
-                          : interactive && hoveredIdx !== null
-                            ? "fill-cyan-600/30"
-                            : "fill-cyan-600"
+                    ${isSelected
+                      ? "fill-cyan-400"
+                      : isHovered
+                        ? "fill-cyan-300"
+                        : interactive && hoveredIdx !== null
+                          ? "fill-cyan-600/30"
+                          : "fill-cyan-600"
                     }
                   `}
                 />
@@ -240,17 +238,15 @@ export default function RadarChart({
               onClick={interactive && onSelectSubject ? () => onSelectSubject(sub.subjectCode) : undefined}
               className={`
                 flex items-center gap-1.5 px-3 py-1.5 rounded-full border transition-all duration-200
-                ${
-                  selectedSubject === sub.subjectCode
-                    ? "bg-cyan-500/10 border-cyan-500/30 text-cyan-400 font-semibold shadow-sm"
-                    : "bg-muted/10 border-transparent text-muted-foreground hover:bg-accent/40 hover:text-foreground"
+                ${selectedSubject === sub.subjectCode
+                  ? "bg-cyan-500/10 border-cyan-500/30 text-cyan-400 font-semibold shadow-sm"
+                  : "bg-muted/10 border-transparent text-muted-foreground hover:bg-accent/40 hover:text-foreground"
                 }
               `}
             >
               <span
-                className={`h-1.5 w-1.5 rounded-full transition-all duration-200 ${
-                  selectedSubject === sub.subjectCode ? "bg-cyan-400" : "bg-muted-foreground/40"
-                }`}
+                className={`h-1.5 w-1.5 rounded-full transition-all duration-200 ${selectedSubject === sub.subjectCode ? "bg-cyan-400" : "bg-muted-foreground/40"
+                  }`}
               />
               {sub.subjectCode}
             </button>

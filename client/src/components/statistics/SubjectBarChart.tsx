@@ -16,7 +16,7 @@ export default function SubjectBarChart({
   if (subjects.length === 0) return null;
 
   // Find max total to set the bar percentage scale (usually 100 marks is max)
-  const maxVal = 100;
+  const MAX_TOTAL_MARKS = 100;
 
   return (
     <div className="rounded-2xl border border-border bg-card p-6">
@@ -45,8 +45,8 @@ export default function SubjectBarChart({
 
       <div className="space-y-4">
         {subjects.map((sub) => {
-          const internalWidth = (sub.averageInternal / maxVal) * 100;
-          const externalWidth = (sub.averageExternal / maxVal) * 100;
+          const internalWidth = (sub.averageInternal / MAX_TOTAL_MARKS) * 100;
+          const externalWidth = (sub.averageExternal / MAX_TOTAL_MARKS) * 100;
           const isSelected = selectedSubject === sub.subjectCode;
 
           return (
@@ -55,10 +55,9 @@ export default function SubjectBarChart({
               onClick={() => onSelectSubject(sub.subjectCode)}
               className={`
                 group cursor-pointer rounded-xl border py-4 px-5 transition-all duration-200
-                ${
-                  isSelected
-                    ? "bg-cyan-500/5 border-cyan-500/20 shadow-sm"
-                    : "bg-muted/5 border-transparent hover:bg-accent/25 hover:border-border"
+                ${isSelected
+                  ? "bg-cyan-500/5 border-cyan-500/20 shadow-sm"
+                  : "bg-muted/5 border-transparent hover:bg-accent/25 hover:border-border"
                 }
               `}
             >

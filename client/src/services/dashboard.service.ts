@@ -113,7 +113,7 @@ export async function getTopStudents(): Promise<TopStudent[]> {
 
   const data: TopStudentsResponse = await response.json();
 
-  return data.toppers ?? [];
+  return data.toppers;
 }
 
 export async function getRecentUploads(): Promise<RecentUpload[]> {
