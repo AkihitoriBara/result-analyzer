@@ -6,11 +6,27 @@ The application automatically extracts students, subjects, grades, SGPA, credits
 
 ---
 
+# 🌐 Live Demo
+
+### Application
+
+https://result-analyzer-flax.vercel.app
+
+### Backend API
+
+https://result-analyzer-api-fiwj.onrender.com
+
+> **Note**
+>
+> The backend is hosted on Render's free tier. The first request after a period of inactivity may take **30–60 seconds** while the server wakes up.
+
+---
+
 # ✨ Features
 
 ## 📥 Result Processing
 
-- Upload official university result PDFs
+- Upload official university result PDF
 - Automatic PDF parsing
 - Student extraction
 - Subject extraction
@@ -66,21 +82,113 @@ The application automatically extracts students, subjects, grades, SGPA, credits
 
 # 📷 Screenshots
 
-### Dashboard
+## Dashboard
 
-*(Coming soon)*
+![Dashboard](docs/images/dashboard.png)
 
-### Student Directory
+---
 
-*(Coming soon)*
+## Student Directory
 
-### Upload Management
+![Students](docs/images/students.png)
 
-*(Coming soon)*
+---
 
-### Academic Analytics
+## Upload Management
 
-*(Coming soon)*
+![Uploads](docs/images/uploads.png)
+
+---
+
+## Academic Analytics
+
+![Analytics](docs/images/analytics.png)
+
+---
+
+# 🚀 Quick Start
+
+## Clone the repository
+
+```bash
+git clone https://github.com/AkihitoriBara/result-analyzer.git
+```
+
+## Install dependencies
+
+Backend
+
+```bash
+cd server
+npm install
+```
+
+Frontend
+
+```bash
+cd ../client
+npm install
+```
+
+## Configure environment variables
+
+Copy the example environment files.
+
+Backend
+
+```bash
+cp .env.example .env
+```
+
+Frontend
+
+```bash
+cp .env.example .env.local
+```
+
+Update the values as required.
+
+## Start the application
+
+Backend
+
+```bash
+npm run dev
+```
+
+Frontend
+
+```bash
+npm run dev
+```
+
+Open
+
+```
+http://localhost:3000
+```
+
+---
+
+# 🧪 Testing the Application
+
+A sample university result PDF is provided for testing.
+
+Location
+
+```text
+docs/sample-data/semester4-results.pdf
+```
+
+### Test Workflow
+
+1. Open the Upload page.
+2. Upload the sample PDF.
+3. Wait for processing to finish.
+4. Visit the Dashboard.
+5. Explore the Student Directory.
+6. View the Academic Analytics page.
+7. Delete the uploaded file to verify database cleanup.
 
 ---
 
@@ -103,6 +211,41 @@ The application automatically extracts students, subjects, grades, SGPA, credits
 - PostgreSQL
 - Multer
 - pdf2json
+
+---
+
+# ☁️ Deployment
+
+| Service | Platform |
+|----------|----------|
+| Frontend | Vercel |
+| Backend | Render |
+| Database | Neon PostgreSQL |
+
+---
+
+# 🏗 Architecture
+
+```text
+                 University Result PDF
+                          │
+                          ▼
+                  Express API (Backend)
+                          │
+               PDF Parsing (pdf2json)
+                          │
+                          ▼
+                    Prisma ORM
+                          │
+                          ▼
+               PostgreSQL (Neon)
+                          │
+                          ▼
+                 REST API Endpoints
+                          │
+                          ▼
+         Next.js Dashboard (Frontend)
+```
 
 ---
 
@@ -204,8 +347,6 @@ PassCriteria
 
 # ⚙️ Environment Variables
 
-This project uses environment variables for configuration.
-
 ## Frontend
 
 Create `client/.env.local` using `client/.env.example`.
@@ -242,12 +383,26 @@ NODE_ENV=development
 
 Create the following files before running the project:
 
-```
+```text
 client/.env.local
 server/.env
 ```
 
 using the provided `.env.example` templates, then update the values to match your local environment.
+
+---
+
+# ⚠️ Known Limitations (Version 1)
+
+Version 1 focuses on demonstrating the complete workflow from PDF upload to academic analytics.
+
+Current limitations include:
+
+- Supports the official JG University Semester 4 result PDF format.
+- Upload progress reflects file transfer but not backend parsing progress.
+- Backend is hosted on Render's free tier and may require up to one minute to wake after inactivity.
+- Large PDF imports require several seconds before analytics become available.
+- Authentication and multi-user support are planned for Version 2.
 
 ---
 
@@ -258,6 +413,8 @@ Backend ██████████ 100%
 Frontend ██████████ 100%
 
 Analytics ██████████ 100%
+
+Deployment ██████████ 100%
 
 Version 1.0 ██████████ 100%
 
@@ -300,28 +457,47 @@ Version 1.0 ██████████ 100%
 - Department analytics
 - Multi-user support
 - Role-based permissions
-- Cloud deployment (Vercel + Render)
+
+---
+
+# 💡 Future Improvements
+
+- Support multiple university result formats
+- Background PDF processing with job queues
+- Accurate real-time upload progress
+- Semester-to-semester comparisons
+- PDF and Excel report exports
+- Performance optimization for larger datasets
+- Docker support
+- Improved caching and loading performance
 
 ---
 
 # 🎯 Project Goal
 
-Transform large university result PDFs into structured relational data that can be searched, analyzed, and visualized through a modern academic dashboard.
+Result Analyzer aims to automate the manual process of analyzing university examination results by transforming official PDF result sheets into structured relational data that can be searched, analyzed, and visualized through an interactive academic dashboard.
 
 ---
 
 # 📚 What I Learned
 
-This project was built as a personal software engineering project to gain hands-on experience with:
+Building this project gave me practical experience in:
 
-- TypeScript
-- React
-- Next.js
-- Express
-- Prisma ORM
-- PostgreSQL
-- REST API design
-- PDF parsing
-- Data visualization
-- Software architecture
-- Full-stack application development
+- Designing a full-stack application architecture
+- Building REST APIs with Express
+- Working with Prisma ORM and PostgreSQL
+- Parsing structured PDF documents
+- Designing relational database schemas
+- Building reusable React components
+- State management in Next.js
+- Deploying production applications using Vercel, Render, and Neon
+- Managing environment variables for local and production environments
+- Structuring large TypeScript codebases
+- Building complete end-to-end software projects
+
+---
+
+# 📖 Additional Documentation
+
+- `docs/DEVELOPMENT_LOG.md` — Major bugs encountered and how they were resolved.
+- `docs/sample-data/semester4-results.pdf` — Sample input for testing the application.
