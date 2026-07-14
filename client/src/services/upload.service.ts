@@ -1,6 +1,5 @@
 import { Upload } from "@/types/upload";
-
-const API_URL = "http://localhost:5000/api";
+import { API_URL } from "@/lib/config";
 
 export type UploadResult = {
   success: boolean;

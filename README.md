@@ -42,6 +42,8 @@ The application automatically extracts students, subjects, grades, SGPA, credits
 - Top 10 students
 - Subject performance radar chart
 - Subject comparison chart
+- Grade distribution analysis
+- Subject topper detection
 - Hardest subject detection
 - Easiest subject detection
 - Highest subject average
@@ -50,12 +52,12 @@ The application automatically extracts students, subjects, grades, SGPA, credits
 
 ---
 
-## ⚙ Backend
+## ⚙️ Backend
 
-- REST API
+- RESTful API
 - PostgreSQL integration
 - Prisma ORM
-- Relational database
+- Relational database design
 - Upload history
 - Statistics aggregation
 - Topper calculation
@@ -64,7 +66,21 @@ The application automatically extracts students, subjects, grades, SGPA, credits
 
 # 📷 Screenshots
 
-> Screenshots will be added after Version 1 release.
+### Dashboard
+
+*(Coming soon)*
+
+### Student Directory
+
+*(Coming soon)*
+
+### Upload Management
+
+*(Coming soon)*
+
+### Academic Analytics
+
+*(Coming soon)*
 
 ---
 
@@ -83,6 +99,7 @@ The application automatically extracts students, subjects, grades, SGPA, credits
 - Express
 - TypeScript
 - Prisma ORM
+- Prisma Client
 - PostgreSQL
 - Multer
 - pdf2json
@@ -94,25 +111,29 @@ The application automatically extracts students, subjects, grades, SGPA, credits
 ```text
 result-analyzer/
 
-client/
+├── client/
+│   ├── public/
+│   ├── src/
+│   │   ├── app/
+│   │   ├── components/
+│   │   ├── services/
+│   │   ├── lib/
+│   │   └── types/
+│   └── package.json
 │
-├── src/
-│   ├── app/
-│   ├── components/
-│   ├── services/
-│   └── types/
+├── server/
+│   ├── prisma/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── services/
+│   │   ├── parser/
+│   │   ├── database/
+│   │   ├── routes/
+│   │   └── middleware/
+│   └── package.json
 │
-server/
-│
-├── src/
-│   ├── controllers/
-│   ├── services/
-│   ├── parser/
-│   ├── database/
-│   ├── routes/
-│   └── middleware/
-│
-README.md
+├── docs/
+└── README.md
 ```
 
 ---
@@ -122,7 +143,7 @@ README.md
 ## Uploads
 
 | Method | Endpoint |
-|--------|----------|
+|---------|----------|
 | POST | `/api/upload` |
 | GET | `/api/uploads` |
 
@@ -131,7 +152,7 @@ README.md
 ## Students
 
 | Method | Endpoint |
-|--------|----------|
+|---------|----------|
 | GET | `/api/students` |
 | GET | `/api/students/:enrollment` |
 | GET | `/api/students/search?enrollment=...` |
@@ -141,7 +162,7 @@ README.md
 ## Results
 
 | Method | Endpoint |
-|--------|----------|
+|---------|----------|
 | GET | `/api/results/topper` |
 | GET | `/api/results/top10` |
 
@@ -150,7 +171,7 @@ README.md
 ## Statistics
 
 | Method | Endpoint |
-|--------|----------|
+|---------|----------|
 | GET | `/api/statistics` |
 
 ---
@@ -181,6 +202,55 @@ PassCriteria
 
 ---
 
+# ⚙️ Environment Variables
+
+This project uses environment variables for configuration.
+
+## Frontend
+
+Create `client/.env.local` using `client/.env.example`.
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
+```
+
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_API_URL` | Base URL of the backend API |
+
+---
+
+## Backend
+
+Create `server/.env` using `server/.env.example`.
+
+```env
+PORT=5000
+DATABASE_URL=
+JWT_SECRET=your-secret-here
+NODE_ENV=development
+```
+
+| Variable | Description |
+|----------|-------------|
+| `PORT` | Server port |
+| `DATABASE_URL` | PostgreSQL connection string |
+| `JWT_SECRET` | JWT signing secret |
+| `NODE_ENV` | Application environment |
+
+### Local Setup
+
+Create the following files before running the project:
+
+```
+client/.env.local
+server/.env
+```
+
+using the provided `.env.example` templates, then update the values to match your local environment.
+
+---
+
 # 🚀 Current Progress
 
 Backend ██████████ 100%
@@ -189,13 +259,13 @@ Frontend ██████████ 100%
 
 Analytics ██████████ 100%
 
-Version 1 ██████████ 100%
+Version 1.0 ██████████ 100%
 
 ---
 
 # 🛣 Roadmap
 
-## ✅ Version 1
+## ✅ Version 1.0 (Current)
 
 - PDF Upload
 - PDF Parsing
@@ -230,7 +300,7 @@ Version 1 ██████████ 100%
 - Department analytics
 - Multi-user support
 - Role-based permissions
-- Deployment
+- Cloud deployment (Vercel + Render)
 
 ---
 
@@ -255,9 +325,3 @@ This project was built as a personal software engineering project to gain hands-
 - Data visualization
 - Software architecture
 - Full-stack application development
-
----
-
-# 📄 License
-
-This project is licensed under the MIT License.
