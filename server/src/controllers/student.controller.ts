@@ -1,46 +1,56 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { StudentService } from "../services/student.service.js";
+import { AppError } from "../errors/app-error.js";
 
 export class StudentController {
   private studentService = new StudentService();
 
-  async getAllStudents(req: Request, res: Response) {
-    const students = await this.studentService.getAllStudents();
+  async getAllStudents(req: Request, res: Response, next: NextFunction) {
+    try {
+      const students = await this.studentService.getAllStudents();
 
-    return res.json({
-      success: true,
-      count: students.length,
-      students,
-    });
+      return res.json({
+        success: true,
+        count: students.length,
+        students,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
 
-  async getStudentResult(req: Request, res: Response) {
+  async getStudentResult(req: Request, res: Response, next: NextFunction) {
     const enrollment = req.params.enrollment as string;
 
-    const student = await this.studentService.getStudentResult(enrollment);
+    try {
+      const student = await this.studentService.getStudentResult(enrollment);
 
-    return res.json({
-      success: true,
-      student,
-    });
+      return res.json({
+        success: true,
+        student,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
 
-  async searchByEnrollment(req: Request, res: Response) {
+  async searchByEnrollment(req: Request, res: Response, next: NextFunction) {
     const { enrollment } = req.query;
 
     if (typeof enrollment !== "string") {
-      return res.status(400).json({
-        success: false,
-        message: "Enrollment number is required.",
-      });
+      return next(new AppError("Enrollment number is required.", 400));
     }
 
-    const students = await this.studentService.searchByEnrollment(enrollment);
+    try {
+      const students = await this.studentService.searchByEnrollment(enrollment);
 
-    return res.json({
-      success: true,
-      count: students.length,
-      students,
-    });
+      return res.json({
+        success: true,
+        count: students.length,
+        students,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
 }

@@ -1,17 +1,15 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { UploadService } from "../services/upload.service.js";
+import { AppError } from "../errors/app-error.js";
 
 export class UploadController {
   private uploadService = new UploadService();
 
-  async upload(req: Request, res: Response) {
+  async upload(req: Request, res: Response, next: NextFunction) {
     const file = req.file;
 
     if (!file) {
-      return res.status(400).json({
-        success: false,
-        message: "No file uploaded.",
-      });
+      return next(new AppError("No file uploaded.", 400));
     }
 
     try {
@@ -19,34 +17,29 @@ export class UploadController {
 
       return res.status(200).json(result);
     } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "The PDF could not be processed.";
-
-      return res.status(500).json({
-        success: false,
-        message,
-      });
+      next(error);
     }
   }
 
-  async getAllUploads(req: Request, res: Response) {
-    const uploads = await this.uploadService.getAllUploads();
+  async getAllUploads(req: Request, res: Response, next: NextFunction) {
+    try {
+      const uploads = await this.uploadService.getAllUploads();
 
-    return res.json({
-      success: true,
-      count: uploads.length,
-      uploads,
-    });
+      return res.json({
+        success: true,
+        count: uploads.length,
+        uploads,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
 
-  async deleteUpload(req: Request, res: Response) {
+  async deleteUpload(req: Request, res: Response, next: NextFunction) {
     const uploadId = Number(req.params.id);
 
     if (Number.isNaN(uploadId)) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid upload id.",
-      });
+      return next(new AppError("Invalid upload id.", 400));
     }
 
     try {
@@ -54,15 +47,7 @@ export class UploadController {
 
       return res.json(result);
     } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "Failed to delete upload.";
-
-      const statusCode = message === "Upload not found." ? 404 : 500;
-
-      return res.status(statusCode).json({
-        success: false,
-        message,
-      });
+      next(error);
     }
   }
 }

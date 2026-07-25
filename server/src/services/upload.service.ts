@@ -8,6 +8,7 @@ import { UploadRepository } from "../database/repositories/upload.repository.js"
 import { PassCriteriaRepository } from "../database/repositories/pass-criteria.repository.js";
 import { ResultRepository } from "../database/repositories/result.repository.js";
 import { SubjectRepository } from "../database/repositories/subject.repository.js";
+import { AppError } from "../errors/app-error.js";
 
 export class UploadService {
   private pdfParser = new ResultPdfParser();
@@ -104,7 +105,7 @@ export class UploadService {
     const deletedUpload = await this.uploadRepository.deleteUpload(uploadId);
 
     if (!deletedUpload) {
-      throw new Error("Upload not found.");
+      throw new AppError("Upload not found.", 404);
     }
 
     const filePath = path.join(process.cwd(), "src", "uploads", deletedUpload.fileName);

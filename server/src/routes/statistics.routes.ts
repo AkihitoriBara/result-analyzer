@@ -5,6 +5,8 @@ const router = Router();
 
 const statisticsController = new StatisticsController();
 
-router.get("/", (req, res) => statisticsController.getStatistics(req, res));
+router.get("/", (req, res, next) =>
+  statisticsController.getStatistics(req, res, next),
+);
 
 export default router;

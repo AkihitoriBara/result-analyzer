@@ -1,4 +1,5 @@
 import { StudentRepository } from "../database/repositories/student.repository.js";
+import { AppError } from "../errors/app-error.js";
 
 export class StudentService {
   private studentRepository = new StudentRepository();
@@ -11,11 +12,11 @@ export class StudentService {
     const student = await this.studentRepository.getStudentResult(enrollment);
 
     if (!student) {
-      throw new Error("Student not found.");
+      throw new AppError("Student not found.", 404);
     }
 
     if (student.results.length === 0) {
-      throw new Error("No results found for this student.");
+      throw new AppError("No results found for this student.", 404);
     }
 
     return student;

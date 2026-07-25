@@ -5,14 +5,16 @@ const router = Router();
 
 const studentController = new StudentController();
 
-router.get("/", (req, res) => studentController.getAllStudents(req, res));
-
-router.get("/search", (req, res) =>
-  studentController.searchByEnrollment(req, res),
+router.get("/", (req, res, next) =>
+  studentController.getAllStudents(req, res, next),
 );
 
-router.get("/:enrollment", (req, res) =>
-  studentController.getStudentResult(req, res),
+router.get("/search", (req, res, next) =>
+  studentController.searchByEnrollment(req, res, next),
+);
+
+router.get("/:enrollment", (req, res, next) =>
+  studentController.getStudentResult(req, res, next),
 );
 
 export default router;

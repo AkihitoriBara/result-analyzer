@@ -6,10 +6,12 @@ const router = Router();
 
 const uploadController = new UploadController();
 
-router.get("/uploads", (req, res) => uploadController.getAllUploads(req, res));
+router.get("/uploads", (req, res, next) =>
+  uploadController.getAllUploads(req, res, next),
+);
 
-router.delete("/uploads/:id", (req, res) =>
-  uploadController.deleteUpload(req, res),
+router.delete("/uploads/:id", (req, res, next) =>
+  uploadController.deleteUpload(req, res, next),
 );
 
 router.post(

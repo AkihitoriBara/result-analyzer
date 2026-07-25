@@ -5,6 +5,7 @@ import uploadRoutes from "./routes/upload.routes.js";
 import studentRoutes from "./routes/student.routes.js";
 import statisticsRoutes from "./routes/statistics.routes.js";
 import resultRoutes from "./routes/result.routes.js";
+import { errorMiddleware } from "./middleware/error.middleware.js";
 
 const app = express();
 
@@ -28,5 +29,7 @@ app.use("/api/statistics", statisticsRoutes);
 
 // get topper
 app.use("/api/results", resultRoutes);
+
+app.use(errorMiddleware);
 
 export default app;
