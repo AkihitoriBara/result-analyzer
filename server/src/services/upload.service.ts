@@ -108,7 +108,12 @@ export class UploadService {
       throw new AppError("Upload not found.", 404);
     }
 
-    const filePath = path.join(process.cwd(), "src", "uploads", deletedUpload.fileName);
+    const filePath = path.join(
+      process.cwd(),
+      "src",
+      "uploads",
+      deletedUpload.fileName,
+    );
 
     try {
       await unlink(filePath);

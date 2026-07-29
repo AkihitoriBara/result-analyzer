@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { UploadController } from "../controllers/upload.controller.js";
 import { upload } from "../middleware/upload.middleware.js";
+import {
+  validateUploadFile,
+  validateUploadId,
+} from "../middleware/validation.middleware.js";
 
 const router = Router();
 
@@ -10,13 +14,14 @@ router.get("/uploads", (req, res, next) =>
   uploadController.getAllUploads(req, res, next),
 );
 
-router.delete("/uploads/:id", (req, res, next) =>
+router.delete("/uploads/:id", validateUploadId, (req, res, next) =>
   uploadController.deleteUpload(req, res, next),
 );
 
 router.post(
   "/upload",
   upload.single("resultPdf"),
+  validateUploadFile,
   uploadController.upload.bind(uploadController),
 );
 

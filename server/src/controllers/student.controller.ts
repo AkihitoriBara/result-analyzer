@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import { StudentService } from "../services/student.service.js";
-import { AppError } from "../errors/app-error.js";
 
 export class StudentController {
   private studentService = new StudentService();
@@ -35,11 +34,7 @@ export class StudentController {
   }
 
   async searchByEnrollment(req: Request, res: Response, next: NextFunction) {
-    const { enrollment } = req.query;
-
-    if (typeof enrollment !== "string") {
-      return next(new AppError("Enrollment number is required.", 400));
-    }
+    const enrollment = req.query.enrollment as string;
 
     try {
       const students = await this.studentService.searchByEnrollment(enrollment);

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { StudentController } from "../controllers/student.controller.js";
+import { validateEnrollmentQuery } from "../middleware/validation.middleware.js";
 
 const router = Router();
 
@@ -9,7 +10,7 @@ router.get("/", (req, res, next) =>
   studentController.getAllStudents(req, res, next),
 );
 
-router.get("/search", (req, res, next) =>
+router.get("/search", validateEnrollmentQuery, (req, res, next) =>
   studentController.searchByEnrollment(req, res, next),
 );
 
