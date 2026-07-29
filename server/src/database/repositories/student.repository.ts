@@ -1,8 +1,10 @@
+import { Prisma } from "@prisma/client";
 import prisma from "../prisma.js";
 
 export class StudentRepository {
-  async upsertStudent(enrollment: string, rollNumber: string) {
-    return prisma.student.upsert({
+  async upsertStudent(enrollment: string, rollNumber: string, tx?: Prisma.TransactionClient) {
+    const client = tx ?? prisma;
+    return client.student.upsert({
       where: {
         enrollment,
       },
@@ -13,6 +15,36 @@ export class StudentRepository {
 
       create: {
         enrollment,
+        rollNumber,
+      },
+    });
+  }
+
+  async getStudentsByEnrollments(enrollments: string[], tx?: Prisma.TransactionClient) {
+    const client = tx ?? prisma;
+    return client.student.findMany({
+      where: {
+        enrollment: {
+          in: enrollments,
+        },
+      },
+    });
+  }
+
+  async createStudents(data: Array<{ enrollment: string, rollNumber: string }>, tx?: Prisma.TransactionClient) {
+    const client = tx ?? prisma;
+    return client.student.createMany({
+      data,
+    });
+  }
+
+  async updateStudentRollNumber(enrollment: string, rollNumber: string, tx?: Prisma.TransactionClient) {
+    const client = tx ?? prisma;
+    return client.student.update({
+      where: {
+        enrollment,
+      },
+      data: {
         rollNumber,
       },
     });

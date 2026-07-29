@@ -1,18 +1,40 @@
+import { Prisma } from "@prisma/client";
 import prisma from "../prisma.js";
 
 export class ResultRepository {
-  async createResult(data: {
-    studentId: number;
-    uploadId: number;
+  async createResult(
+    data: {
+      studentId: number;
+      uploadId: number;
 
-    sgpa: number;
+      sgpa: number;
 
-    totalCredits: number;
-    totalGradePoints: number;
+      totalCredits: number;
+      totalGradePoints: number;
 
-    passed: boolean;
-  }) {
-    return prisma.result.create({
+      passed: boolean;
+    },
+    tx?: Prisma.TransactionClient,
+  ) {
+    const client = tx ?? prisma;
+    return client.result.create({
+      data,
+    });
+  }
+
+  async createResultsAndReturn(
+    data: Array<{
+      studentId: number;
+      uploadId: number;
+      sgpa: number;
+      totalCredits: number;
+      totalGradePoints: number;
+      passed: boolean;
+    }>,
+    tx?: Prisma.TransactionClient,
+  ) {
+    const client = tx ?? prisma;
+    return client.result.createManyAndReturn({
       data,
     });
   }
