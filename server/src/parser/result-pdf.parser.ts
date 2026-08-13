@@ -1,9 +1,13 @@
 import PDFParser from "pdf2json";
 import { StudentParser } from "./student.parser.js";
 import { StudentResult } from "../types/student.types.js";
+import { PdfTokenExtractor } from "./pdf-token-extractor.js";
+import { TokenNormalizer } from "./token-normalizer.js";
 
 export class ResultPdfParser {
   private studentParser = new StudentParser();
+  private tokenExtractor = new PdfTokenExtractor();
+  private tokenNormalizer = new TokenNormalizer();
 
   async extractText(filePath: string): Promise<StudentResult[]> {
     return new Promise((resolve, reject) => {
@@ -14,15 +18,8 @@ export class ResultPdfParser {
       });
 
       pdfParser.on("pdfParser_dataReady", (pdfData: any) => {
-        const words: string[] = [];
-
-        for (const page of pdfData.Pages) {
-          for (const text of page.Texts) {
-            for (const run of text.R) {
-              words.push(decodeURIComponent(run.T));
-            }
-          }
-        }
+        const tokens = this.tokenExtractor.extract(pdfData);
+        const words = this.tokenNormalizer.toWords(tokens);
 
         const students = this.studentParser.splitStudents(words);
 
