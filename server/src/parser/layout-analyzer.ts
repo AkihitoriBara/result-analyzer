@@ -23,11 +23,13 @@ export const JG_UNIV_SEM4_PROFILE: FormatLayoutConfig = {
   footerYCutoff: 50.0,
   rowYTolerance: 0.15,
   detect: (tokens: PdfToken[]) => {
-    const hasEnrollment = tokens.some((t) => /^250\d{7}$/.test(t.text));
-    const hasSchoolHeader = tokens.some((t) =>
-      t.text.includes("SCHOOL OF COMPUTER SCIENCE"),
+    const has10DigitEnrollment = tokens.some(
+      (t) => t.x >= 3.0 && t.x <= 6.0 && /^\d{10}$/.test(t.text),
     );
-    return hasEnrollment && hasSchoolHeader;
+    const hasSemesterHeader = tokens.some((t) =>
+      t.text.includes("SEMESTER"),
+    );
+    return has10DigitEnrollment && hasSemesterHeader;
   },
   columnBands: [
     { id: "sNo", minX: 3.0, maxX: 4.0, label: "S.No" },

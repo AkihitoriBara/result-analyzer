@@ -22,16 +22,9 @@ export class ResultPdfParser {
       pdfParser.on("pdfParser_dataReady", (pdfData: any) => {
         const tokens = this.tokenExtractor.extract(pdfData);
 
-        // Phase 2 layout analysis (prepares architecture for future layout-aware parsing)
-        const _documentLayout = this.layoutAnalyzer.analyze(tokens);
+        const documentLayout = this.layoutAnalyzer.analyze(tokens);
 
-        const words = this.tokenNormalizer.toWords(tokens);
-
-        const students = this.studentParser.splitStudents(words);
-
-        const parsedStudents = students.map((student) =>
-          this.studentParser.parse(student),
-        );
+        const parsedStudents = this.studentParser.parseLayout(documentLayout);
 
         resolve(parsedStudents);
       });
